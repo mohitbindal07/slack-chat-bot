@@ -24,7 +24,7 @@ public class SlackController {
                                                @RequestParam("text") String text,
                                                @RequestParam("response_url") String responseUrl) {
         SlackResponse response = new SlackResponse();
-        response.setText("This is the response text"+ "team id: " +teamId+
+        response.setText("This is the response"+ "team id: " +teamId+
         		"domain : "+teamDomain+
         		"c id: "+ channelId+
         		" c name: "+channelName+
