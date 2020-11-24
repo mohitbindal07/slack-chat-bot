@@ -50,6 +50,17 @@
 		    <artifactId>okhttp</artifactId>
 		    <version>4.9.0</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.hubspot.slack</groupId>
+		    <artifactId>slack-base</artifactId>
+		    <version>1.12</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.hubspot.slack</groupId>
+		    <artifactId>slack-java-client</artifactId>
+		    <version>1.12</version>
+		</dependency>
 	</dependencies>
 
 	<build>
