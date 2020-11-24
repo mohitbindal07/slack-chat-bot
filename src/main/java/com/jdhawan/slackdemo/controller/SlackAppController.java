@@ -71,7 +71,7 @@ public class SlackAppController extends SlackAppServlet {
 	public void onReceiveEventCommand(@RequestBody String payload) {
 	
 	    SlackClientRuntimeConfig runtimeConfig = SlackClientRuntimeConfig.builder()
-	          .setTokenSupplier(() -> "xoxb-1507109434786-1521587020117-vkMMUmDiRYpp137YXQGqGucB").build();
+	          .setTokenSupplier(() -> "xoxb-1507109434786-1521587020117-YJmVF0rCzbEp3vflwW6zJXcS").build();
 
 	        SlackClient slackClient = SlackClientFactory.defaultFactory().build(runtimeConfig);
 
