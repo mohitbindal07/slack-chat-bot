@@ -13,7 +13,7 @@ import com.slack.api.bolt.App;
 import com.slack.api.bolt.servlet.SlackAppServlet;
 
 //@WebServlet("/")
-@RestController
+@RestController("/")
 public class SlackAppController extends SlackAppServlet {
 	
 	 private static final Logger logger =
@@ -32,9 +32,12 @@ public class SlackAppController extends SlackAppServlet {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public SlackResponse onReceiveSlashCommand(@RequestBody String body) {
 		logger.info("Inside the event api method: "+ body);
+		 
 		SlackResponse response = new SlackResponse();
-        response.setText("Hey, i am here! ");
+        response.setText("Hey, i am here! " + body);
+        logger.info("End the event api method: "+ response);
 		return response;
       
     }
 }
+
