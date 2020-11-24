@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdhawan.slackdemo.model.SlackResponse;
 import com.slack.api.bolt.App;
 import com.slack.api.bolt.servlet.SlackAppServlet;
 
@@ -30,14 +29,10 @@ public class SlackAppController extends SlackAppServlet {
 	@RequestMapping(value="slack/events",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public SlackResponse onReceiveSlashCommand(@RequestBody String body) {
+    public String onReceiveSlashCommand(@RequestBody String body) {
 		logger.info("Inside the event api method: "+ body);
-		 
-		SlackResponse response = new SlackResponse();
-        response.setText("Hey, i am here! " + body);
-        logger.info("End the event api method: "+ response);
-		return response;
-      
+		
+      return body;
     }
 }
 

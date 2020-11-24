@@ -11,7 +11,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SlackResponse {
 
-    @JsonProperty("text")
+    @Override
+	public String toString() {
+		return "SlackResponse [text=" + text + ", responseType=" + responseType + ", attachments=" + attachments + "]";
+	}
+
+	@JsonProperty("text")
     private String text;
 
     @JsonProperty("response_type")
