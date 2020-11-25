@@ -47,14 +47,12 @@ public class SlackController {
     		isMeeting= true;
     		return response;
     	}
-    	if(timePattern(text) && isMeeting) {
+    	if(timePattern(text) ) {
     		response.setText("Your meeting is set at " + text +
                     ". Would you like to repeat it tomorrow?");
     		return response;
-    	}else {
-    		response.setText("Please provide time in hh:mm format only!");
     	}
-    	if((text.contains("yes")|| text.contains("sure"))&& isMeeting) {
+    	if((text.contains("yes")|| text.contains("sure"))) {
     		response.setText("Great! I will remind you tomorrow before the meeting.");
     		return response;
     	}else {
