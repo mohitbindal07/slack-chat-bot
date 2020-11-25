@@ -1,5 +1,7 @@
 package com.jdhawan.slackdemo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -17,6 +19,8 @@ public class SlackController {
 	
 	private static final Logger logger =
 			  LoggerFactory.getLogger(SlackController.class);
+	
+	static Map<String,String> map = new HashMap<>();
 	
     @RequestMapping(value = "/slack/slash",
             method = RequestMethod.POST,
@@ -38,27 +42,62 @@ public class SlackController {
     		response.setText("You can always schedule one with 'setup meeting' command.");
     		return response;
     	}
-    	if(text.contains("Hi")||text.contains("Hello")||text.contains("Hey")||text.trim().equalsIgnoreCase("hi")||text.trim().equalsIgnoreCase("hello")) {
-    		response.setText("Hi, I am a Bot User");
+    	if(text.trim().equalsIgnoreCase("help")) {
+    		response.setText("How can I help you today, "+userName + "?"
+    				+ "1. Schedule meeting"
+    				+ "2. Reserve conference room");
     		return response;
     	}
-    	if(text.contains("setup meeting")|| text.contains("meeting")||text.equalsIgnoreCase("meeting")) {
-    		response.setText("Cool! At what time (ex. 15:30) do you want me to set up the meeting?");
-    		isMeeting= true;
+    	if(text.toLowerCase().contains("conference")) {
+    		map.put("command", "conference");
+    	}
+    	else if(text.toLowerCase().contains("meeting")) {
+    		map.put("command", "meeting");
+    	}
+    	if(map.get("command").equals("conference")) {
+    		if(timePattern(text)|| map.containsKey("conference-time") ) {
+        		 map.put("conference-time", text);
+        		//response.setText("How many minutes (ex. 30 minutes) you want to schedule a conference?");
+        		//return response;
+        	}else {
+        		response.setText("From what time you want to reserve the conference room");
+        		return response;
+        	}
+    		if(!text.contains("minutes") ) {
+        		response.setText("Please provide duration in minutes");
+        		return response;
+        	}else {
+        		//TODO extract minutes and set in map
+        	}
+    		response.setText("Your conference room has been booked, and your conference room number is C"+(int) ((Math.random() * (10 - 1)) + 1));
+    		return response;
+    		
+    		
+    	}else if(map.get("command").equals("meeting")){
+    		
+    		if(timePattern(text) || map.containsKey("meeting-time")) {
+    			
+        		map.put("meeting-time", text);
+        		
+        	}else {
+        		response.setText("From what time you want to schedule a meeting?");
+        		return response;
+        	}
+    
+        	if(!text.contains("minutes") ) {
+        		response.setText("Please provide duration in minutes");
+        		return response;
+        	}else {
+        		//TODO extract minutes and set in map
+        	}
+        	response.setText("Your meeting scheduled for "+map.get("meeting-time")+ " minutes");
     		return response;
     	}
-    	if(timePattern(text) ) {
-    		response.setText("Your meeting is set at " + text +
-                    ". Would you like to repeat it tomorrow?");
+    	else {
+    		response.setText("I'm sorry but I am not able to understand required functionality.Use /help to get suggestions.");
     		return response;
     	}
-    	if((text.contains("yes")|| text.contains("sure"))) {
-    		response.setText("Great! I will remind you tomorrow before the meeting.");
-    		return response;
-    	}else {
-    		response.setText("No problem. You can always schedule one with 'setup meeting'/'meeting' command.");
-    		return response;
-    	}
+    	
     }
     
     public boolean timePattern(String text) {
