@@ -37,11 +37,11 @@ public class SlackController {
     		response.setText("You can always schedule one with 'setup meeting' command.");
     		return response;
     	}
-    	if(text.contains("Hi")||text.contains("Hello")||text.contains("Good morning")) {
+    	if(text.contains("Hi")||text.contains("Hello")||text.contains("Hey")) {
     		response.setText("Hi, I am a Bot User");
     		return response;
     	}
-    	if(text.contains("setup meeting")|| text.contains("meeting")) {
+    	if(text.contains("setup meeting")) {
     		response.setText("Cool! At what time (ex. 15:30) do you want me to set up the meeting?");
     		return response;
     	}
@@ -60,7 +60,7 @@ public class SlackController {
     }
     
     public boolean timePattern(String text) {
-    	Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+    	Pattern pattern = Pattern.compile("-?\\d{2}(\\:\\d{2})?");
     	if (text == null) {
             return false; 
         }
