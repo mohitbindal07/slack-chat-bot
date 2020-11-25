@@ -33,7 +33,7 @@ public class SlackController {
     	SlackResponse response = new SlackResponse();
     	logger.info("The incoming text on /bot slash command : "+ text);
     	response.setResponseType("in_channel");
-    	if(text.contains("")|| text.isEmpty()) {
+    	if(text.trim().isEmpty()) {
     		response.setText("You can always schedule one with 'setup meeting' command.");
     		return response;
     	}
