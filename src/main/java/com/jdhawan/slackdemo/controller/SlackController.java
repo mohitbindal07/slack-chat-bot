@@ -43,7 +43,7 @@ public class SlackController {
     		return response;
     	}
     	if(text.trim().equalsIgnoreCase("help")) {
-    		response.setText("How can I help you today, "+userName + "?"
+    		response.setText("How can I help you today, "+userName + "?\n"
     				+ "1. Schedule meeting"
     				+ "2. Reserve conference room");
     		return response;
@@ -56,9 +56,8 @@ public class SlackController {
     	}
     	if(map.get("command").equals("conference")) {
     		if(timePattern(text)|| map.containsKey("conference-time") ) {
-        		 map.put("conference-time", text);
-        		//response.setText("How many minutes (ex. 30 minutes) you want to schedule a conference?");
-        		//return response;
+        		 map.put("conference-time", extractTime(text));
+        		
         	}else {
         		response.setText("From what time you want to reserve the conference room");
         		return response;
@@ -67,9 +66,10 @@ public class SlackController {
         		response.setText("Please provide duration in minutes");
         		return response;
         	}else {
-        		//TODO extract minutes and set in map
+        		map.put("conference-dur", extractDuration(text));
         	}
-    		response.setText("Your conference room has been booked, and your conference room number is C"+(int) ((Math.random() * (10 - 1)) + 1));
+    		response.setText("Your conference room has been booked from "+map.get("conference-time") + " for " + map.get("conference-dur") + "minutes, and your conference room number is C"+(int) ((Math.random() * (10 - 1)) + 1));
+    		map.clear();
     		return response;
     		
     		
@@ -77,7 +77,7 @@ public class SlackController {
     		
     		if(timePattern(text) || map.containsKey("meeting-time")) {
     			
-        		map.put("meeting-time", text);
+        		map.put("meeting-time", extractTime(text));
         		
         	}else {
         		response.setText("From what time you want to schedule a meeting?");
@@ -90,11 +90,12 @@ public class SlackController {
         	}else {
         		//TODO extract minutes and set in map
         	}
-        	response.setText("Your meeting scheduled for "+map.get("meeting-time")+ " minutes");
+        	response.setText("Your meeting has been schduled from "+map.get("meeting-time") + " for " + map.get("meeting-dur") + "minutes");
     		return response;
     	}
     	else {
     		response.setText("I'm sorry but I am not able to understand required functionality.Use /help to get suggestions.");
+    		map.clear();
     		return response;
     	}
     	
@@ -108,5 +109,21 @@ public class SlackController {
         return pattern.matcher(text).matches();
     }
     
+    public String extractTime(String text) {
+    	if(text.contains(":")) {
+    		return text.substring(text.indexOf(":")-2,text.indexOf(":")+2);
+    		
+    	}
+    	return null;
+    }
+    public static String extractDuration(String text) {
+    	if(text.contains("minutes")) {
+    		String str = text.split("minutes")[0];
+            String [] tmpStr = str.split(" ");
+            int tmpLength = tmpStr.length;
+            return tmpStr[tmpLength-1];
+    	}
+    	return null;
+    }
 }
 
