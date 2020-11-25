@@ -25,27 +25,31 @@ public class SlackController {
                                                @RequestParam("text") String text,
                                                @RequestParam("response_url") String responseUrl) {
     	SlackResponse response = new SlackResponse();
-    	if(text.contains("")|| text.isEmpty() || text==null) {
+    	response.setResponseType("in_channel");
+    	if(text.contains("")|| text.isEmpty()) {
     		response.setText("You can always schedule one with 'setup meeting' command.");
+    		return response;
     	}
     	if(text.contains("Hi")||text.contains("Hello")||text.contains("Good morning")) {
     		response.setText("Hi, I am a Bot User");
+    		return response;
     	}
     	if(text.contains("setup meeting")|| text.contains("meeting")) {
     		response.setText("Cool! At what time (ex. 15:30) do you want me to set up the meeting?");
+    		return response;
     	}
     	if(timePattern(text)) {
     		response.setText("Your meeting is set at " + text +
                     ". Would you like to repeat it tomorrow?");
+    		return response;
     	}
     	if(text.contains("yes")|| text.contains("sure")) {
     		response.setText("Great! I will remind you tomorrow before the meeting.");
+    		return response;
     	}else {
     		response.setText("No problem. You can always schedule one with 'setup meeting' command.");
+    		return response;
     	}
-    	
-        response.setResponseType("in_channel");
-        return response;
     }
     
     public boolean timePattern(String text) {
