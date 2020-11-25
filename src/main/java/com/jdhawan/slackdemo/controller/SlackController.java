@@ -2,6 +2,8 @@ package com.jdhawan.slackdemo.controller;
 
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,10 @@ import com.jdhawan.slackdemo.model.SlackResponse;
 
 @RestController
 public class SlackController {
+	
+	private static final Logger logger =
+			  LoggerFactory.getLogger(SlackController.class);
+	
     @RequestMapping(value = "/slack/slash",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -25,6 +31,7 @@ public class SlackController {
                                                @RequestParam("text") String text,
                                                @RequestParam("response_url") String responseUrl) {
     	SlackResponse response = new SlackResponse();
+    	logger.info("The incoming text on /bot slash command : "+ text);
     	response.setResponseType("in_channel");
     	if(text.contains("")|| text.isEmpty()) {
     		response.setText("You can always schedule one with 'setup meeting' command.");
