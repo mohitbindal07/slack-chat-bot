@@ -32,29 +32,33 @@ public class SlackController {
                                                @RequestParam("response_url") String responseUrl) {
     	SlackResponse response = new SlackResponse();
     	logger.info("The incoming text on /bot slash command : "+ text);
+    	boolean isMeeting=false;
     	response.setResponseType("in_channel");
     	if(text.trim().isEmpty()) {
     		response.setText("You can always schedule one with 'setup meeting' command.");
     		return response;
     	}
-    	if(text.contains("Hi")||text.contains("Hello")||text.contains("Hey")) {
+    	if(text.contains("Hi")||text.contains("Hello")||text.contains("Hey")||text.trim().equalsIgnoreCase("hi")||text.trim().equalsIgnoreCase("hello")) {
     		response.setText("Hi, I am a Bot User");
     		return response;
     	}
-    	if(text.contains("setup meeting")) {
+    	if(text.contains("setup meeting")|| text.contains("meeting")||text.equalsIgnoreCase("meeting")) {
     		response.setText("Cool! At what time (ex. 15:30) do you want me to set up the meeting?");
+    		isMeeting= true;
     		return response;
     	}
-    	if(timePattern(text)) {
+    	if(timePattern(text) && isMeeting) {
     		response.setText("Your meeting is set at " + text +
                     ". Would you like to repeat it tomorrow?");
     		return response;
+    	}else {
+    		response.setText("Please provide time in hh:mm format only!");
     	}
-    	if(text.contains("yes")|| text.contains("sure")) {
+    	if((text.contains("yes")|| text.contains("sure"))&& isMeeting) {
     		response.setText("Great! I will remind you tomorrow before the meeting.");
     		return response;
     	}else {
-    		response.setText("No problem. You can always schedule one with 'setup meeting' command.");
+    		response.setText("No problem. You can always schedule one with 'setup meeting'/'meeting' command.");
     		return response;
     	}
     }
