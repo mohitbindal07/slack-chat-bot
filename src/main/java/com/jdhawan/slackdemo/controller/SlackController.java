@@ -44,7 +44,7 @@ public class SlackController {
     	}
     	if(text.trim().equalsIgnoreCase("help")) {
     		response.setText("How can I help you today, "+userName + "?\n"
-    				+ "1. Schedule meeting"
+    				+ "1. Schedule meeting\n"
     				+ "2. Reserve conference room");
     		return response;
     	}
@@ -88,7 +88,7 @@ public class SlackController {
         		response.setText("Please provide duration in minutes");
         		return response;
         	}else {
-        		//TODO extract minutes and set in map
+        		map.put("meeting-dur", extractDuration(text));
         	}
         	response.setText("Your meeting has been schduled from "+map.get("meeting-time") + " for " + map.get("meeting-dur") + "minutes");
     		return response;
@@ -111,7 +111,7 @@ public class SlackController {
     
     public String extractTime(String text) {
     	if(text.contains(":")) {
-    		return text.substring(text.indexOf(":")-2,text.indexOf(":")+2);
+    		return text.substring(text.indexOf(":")-2,text.indexOf(":")+3);
     		
     	}
     	return null;
