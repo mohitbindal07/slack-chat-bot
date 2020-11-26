@@ -40,20 +40,20 @@ public class SlackController {
     	boolean isMeeting=false;
     	response.setResponseType("in_channel");
     	
-    	if(text.trim().equalsIgnoreCase("help")) {
+    	if("help".equals(text.trim())) {
     		response.setText("How can I help you today, "+userName + "?\n"
     				+ "1. Schedule meeting\n"
     				+ "2. Reserve conference room");
     		map.clear();
     		return response;
     	}
-    	if(text.toLowerCase().contains("conference")) {
+    	if(!(text.isEmpty() || text==null) && text.toLowerCase().contains("conference")) {
     		map.put("command", "conference");
     	}
-    	else if(text.toLowerCase().contains("meeting")) {
+    	else if(!(text.isEmpty() || text==null) && text.toLowerCase().contains("meeting")) {
     		map.put("command", "meeting");
     	}
-    	if(map.get("command").equals("conference")) {
+    	if("conference".equals(map.get("command"))) {
     		if(timePattern(text)|| map.containsKey("conference-time") ) {
     			logger.info("The conference time :{} and extracted time {} : "+ text,extractTime(text));
         		 map.put("conference-time", extractTime(text));
@@ -73,7 +73,7 @@ public class SlackController {
     		return response;
     		
     		
-    	}else if(map.get("command").equals("meeting")){
+    	}else if("meeting".equals(map.get("command"))){
     		
     		if(timePattern(text) || map.containsKey("meeting-time")) {
     			logger.info("The meeting time ::{} and extracted time {} : "+ text,extractTime(text));
