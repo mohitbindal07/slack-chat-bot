@@ -2,6 +2,7 @@ package com.jdhawan.slackdemo.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -68,7 +69,7 @@ public class SlackController {
         	}else {
         		map.put("conference-dur", extractDuration(text));
         	}
-    		response.setText("Your conference room has been booked from "+map.get("conference-time") + " for " + map.get("conference-dur") + "minutes, and your conference room number is C"+(int) ((Math.random() * (10 - 1)) + 1));
+    		response.setText("Your conference room has been booked from "+map.get("conference-time") + " for " + map.get("conference-dur") + " minutes, and your conference room number is C"+(int) ((Math.random() * (10 - 1)) + 1));
     		map.clear();
     		return response;
     		
@@ -90,7 +91,8 @@ public class SlackController {
         	}else {
         		map.put("meeting-dur", extractDuration(text));
         	}
-        	response.setText("Your meeting has been schduled from "+map.get("meeting-time") + " for " + map.get("meeting-dur") + "minutes");
+        	response.setText("Your meeting has been schduled from "+map.get("meeting-time") + " for " + map.get("meeting-dur") + " minutes");
+        	map.clear();
     		return response;
     	}
     	else {
@@ -101,12 +103,22 @@ public class SlackController {
     	
     }
     
-    public boolean timePattern(String text) {
+    public boolean timePattern2(String text) {
     	Pattern pattern = Pattern.compile("-?\\d{2}(\\:\\d{2})?");
     	if (text == null) {
             return false; 
         }
         return pattern.matcher(text).matches();
+    }
+    
+    public boolean timePattern(String text) {
+    	Pattern p = Pattern.compile(".*([01]?[0-9]|2[0-3]):[0-5][0-9].*");
+    	 Matcher m = p.matcher(text);
+         if(m.matches()){
+             return true;
+         }else{
+             return false;
+         }
     }
     
     public String extractTime(String text) {
