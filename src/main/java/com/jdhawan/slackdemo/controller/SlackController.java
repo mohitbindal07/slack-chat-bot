@@ -55,8 +55,10 @@ public class SlackController {
     	}
     	if("conference".equals(map.get("command"))) {
     		if(timePattern(text)|| map.containsKey("conference-time") ) {
-    			logger.info("The conference time :{} and extracted time {} : "+ text,extractTime(text));
-        		 map.put("conference-time", extractTime(text));
+    			logger.info("The conference time :{}  "+ text);
+    			logger.info("extracted time :{} "+ extractTime(text));
+    			if(!map.containsKey("conference-time"))
+    				map.put("conference-time", extractTime(text));
         		
         	}else {
         		response.setText("From what time you want to reserve the conference room");
@@ -76,8 +78,10 @@ public class SlackController {
     	}else if("meeting".equals(map.get("command"))){
     		
     		if(timePattern(text) || map.containsKey("meeting-time")) {
-    			logger.info("The meeting time ::{} and extracted time {} : "+ text,extractTime(text));
-        		map.put("meeting-time", extractTime(text));
+    			logger.info("The meeting time :{} "+ text);
+    			logger.info("extracted time :{} "+ extractTime(text));
+    			if(!map.containsKey("meeting-time"))
+    				map.put("meeting-time", extractTime(text));
         		
         	}else {
         		response.setText("From what time you want to schedule a meeting?");
@@ -119,10 +123,6 @@ public class SlackController {
          }
     }
     
-	/*
-	  public static void main(String[] args) {
-	  System.out.println(extractTime("please meeting at 02:00")); }
-	 */
     public String extractTime(String text) {
     	if(text.contains(":")) {
     		return text.substring(text.indexOf(":")-2,text.indexOf(":")+3);
