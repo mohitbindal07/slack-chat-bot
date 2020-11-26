@@ -39,14 +39,12 @@ public class SlackController {
     	logger.info("The incoming text on /bot slash command : "+ text);
     	boolean isMeeting=false;
     	response.setResponseType("in_channel");
-    	if(text.trim().isEmpty()) {
-    		response.setText("You can always schedule one with 'setup meeting' command.");
-    		return response;
-    	}
+    	
     	if(text.trim().equalsIgnoreCase("help")) {
     		response.setText("How can I help you today, "+userName + "?\n"
     				+ "1. Schedule meeting\n"
     				+ "2. Reserve conference room");
+    		map.clear();
     		return response;
     	}
     	if(text.toLowerCase().contains("conference")) {
@@ -57,6 +55,7 @@ public class SlackController {
     	}
     	if(map.get("command").equals("conference")) {
     		if(timePattern(text)|| map.containsKey("conference-time") ) {
+    			logger.info("The conference time :{} and extracted time {} : "+ text,extractTime(text));
         		 map.put("conference-time", extractTime(text));
         		
         	}else {
@@ -77,7 +76,7 @@ public class SlackController {
     	}else if(map.get("command").equals("meeting")){
     		
     		if(timePattern(text) || map.containsKey("meeting-time")) {
-    			
+    			logger.info("The meeting time ::{} and extracted time {} : "+ text,extractTime(text));
         		map.put("meeting-time", extractTime(text));
         		
         	}else {
@@ -97,7 +96,6 @@ public class SlackController {
     	}
     	else {
     		response.setText("I'm sorry but I am not able to understand required functionality.Use /help to get suggestions.");
-    		map.clear();
     		return response;
     	}
     	
@@ -121,6 +119,10 @@ public class SlackController {
          }
     }
     
+	/*
+	  public static void main(String[] args) {
+	  System.out.println(extractTime("please meeting at 02:00")); }
+	 */
     public String extractTime(String text) {
     	if(text.contains(":")) {
     		return text.substring(text.indexOf(":")-2,text.indexOf(":")+3);
