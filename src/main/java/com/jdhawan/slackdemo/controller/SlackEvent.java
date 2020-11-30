@@ -26,6 +26,7 @@
 	 * next <a href="https://my.slack.com/services/new/bot">creating a new bot</a>.
 	 */
 /*
+ * 
  * @Value("${SLACK_BOT_TOKEN}") private String slackToken;
  * 
  * @Override public String getSlackToken() { return slackToken; }
@@ -43,6 +44,7 @@
 	 * @param event
 	 */
 /*
+ * 
  * @Controller(events = {EventType.DIRECT_MENTION, EventType.DIRECT_MESSAGE})
  * public void onReceiveDM(WebSocketSession session, Event event) {
  * reply(session, event, new Message("Hi, I am " +
@@ -57,6 +59,7 @@
 	 * @param event
 	 */
 /*
+ * 
  * @Controller(events = EventType.MESSAGE, pattern =
  * "^([a-z ]{2})(\\d+)([a-z ]{2})$") public void
  * onReceiveMessage(WebSocketSession session, Event event, Matcher matcher) {
@@ -71,6 +74,7 @@
 	 * @param event
 	 */
 /*
+ * 
  * @Controller(events = EventType.PIN_ADDED) public void
  * onPinAdded(WebSocketSession session, Event event) { reply(session, event, new
  * Message("Thanks for the pin! You can find all pinned items under channel details."
@@ -87,6 +91,7 @@
 	 * @param event
 	 */
 /*
+ * 
  * @Controller(events = EventType.FILE_SHARED) public void
  * onFileShared(WebSocketSession session, Event event) {
  * logger.info("File shared: {}", event); }
@@ -103,6 +108,7 @@
 	 * @param event
 	 */
 /*
+ * 
  * @Controller(pattern = "(setup meeting)", next = "confirmTiming") public void
  * setupMeeting(WebSocketSession session, Event event) {
  * startConversation(event, "confirmTiming"); // start conversation
@@ -118,6 +124,7 @@
 	 * @param event
 	 */
 /*
+ * 
  * @Controller(next = "askTimeForMeeting") public void
  * confirmTiming(WebSocketSession session, Event event) { reply(session, event,
  * new Message("Your meeting is set at " + event.getText() +
@@ -132,6 +139,7 @@
 	 * @param event
 	 */
 /*
+ * 
  * @Controller(next = "askWhetherToRepeat") public void
  * askTimeForMeeting(WebSocketSession session, Event event) { if
  * (event.getText().contains("yes")) { reply(session, event, new
