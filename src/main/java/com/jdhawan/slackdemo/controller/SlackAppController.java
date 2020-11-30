@@ -22,7 +22,6 @@ import com.slack.api.bolt.servlet.SlackAppServlet;
 @RestController("/")
 public class SlackAppController extends SlackAppServlet {
 
-	App app = new App();
 	private static final Logger logger = LoggerFactory.getLogger(SlackAppController.class);
 	/**
 	 * 
