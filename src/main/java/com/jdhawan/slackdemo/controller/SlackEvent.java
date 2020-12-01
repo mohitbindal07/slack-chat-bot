@@ -16,7 +16,7 @@
  * 
  * //@JBot
  * 
- * @Component public class SlackEvent extends Bot{
+ * @Component public class SlackEvent extends Bot {
  * 
  * private static final Logger logger =
  * LoggerFactory.getLogger(SlackEvent.class);
@@ -33,7 +33,6 @@
  * 
  * @Override public Bot getSlackBot() { return this; }
  * 
- * 
  *//**
 	 * Invoked when the bot receives a direct mention (@botname: message) or a
 	 * direct message. NOTE: These two event types are added by jbot to make your
@@ -45,7 +44,7 @@
 	 */
 /*
  * 
- * @Controller(events = {EventType.DIRECT_MENTION, EventType.DIRECT_MESSAGE})
+ * @Controller(events = { EventType.DIRECT_MENTION, EventType.DIRECT_MESSAGE })
  * public void onReceiveDM(WebSocketSession session, Event event) {
  * reply(session, event, new Message("Hi, I am " +
  * slackService.getCurrentUser().getName())); }
@@ -96,7 +95,6 @@
  * onFileShared(WebSocketSession session, Event event) {
  * logger.info("File shared: {}", event); }
  * 
- * 
  *//**
 	 * Conversation feature of JBot. This method is the starting point of the
 	 * conversation (as it calls {@link Bot#startConversation(Event, String)} within
@@ -125,6 +123,7 @@
 	 */
 /*
  * 
+ * 
  * @Controller(next = "askTimeForMeeting") public void
  * confirmTiming(WebSocketSession session, Event event) { reply(session, event,
  * new Message("Your meeting is set at " + event.getText() +
@@ -139,6 +138,7 @@
 	 * @param event
 	 */
 /*
+ * 
  * 
  * @Controller(next = "askWhetherToRepeat") public void
  * askTimeForMeeting(WebSocketSession session, Event event) { if
